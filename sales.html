@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Sales Page</title>
+    <script src="myscripts.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Sales Page</h1>
+      <p>This is the sales page content.</p>
+      <a href="index.html">Go back to Home</a>
+    </div>
+
+    <div id="enterdetails">
+      <h1>Enter details</h1>
+      <h4>ID</h4>
+      <input id="enterID" type="number" />
+
+      <h4>Quantity</h4>
+      <input id="enterQuant" type="number" /> <br /><br />
+
+      <button id="sold" class="data">Sold</button>
+    </div>
+
+    <div id="finddetails">
+      <h1>Details of recently sold product</h1>
+
+      <h3 id="findName" type="text"></h3>
+      <h3 id="findCost" type="number"></h3>
+      <h3 id="findBrand" type="text"></h3>
+      <h3 id="findQuant" type="number"></h3>
+    </div>
+
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCi235lQrGK_IHJdsX_uMAdHfA_9kD7J4o",
+        authDomain: "retail-store-management-c1436.firebaseapp.com",
+        databaseURL:
+          "https://retail-store-management-c1436-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "retail-store-management-c1436",
+        storageBucket: "retail-store-management-c1436.appspot.com",
+        messagingSenderId: "582711916949",
+        appId: "1:582711916949:web:460ef388a7b91745d79e9c",
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+
+      import {
+        getDatabase,
+        set,
+        get,
+        update,
+        remove,
+        ref,
+        child,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+      const db = getDatabase();
+
+      var enterID = document.querySelector("#enterID");
+      var enterQuant = document.querySelector("#enterQuant");
+
+      var soldBtn = document.querySelector("#sold");
+      var findName = document.querySelector("#findName");
+      var findPrice = document.querySelector("#findPrice");
+      var findBrand = document.querySelector("#findBrand");
+      var findQuant = document.querySelector("#findQuant");
+
+      function Sold() {
+        const dbRef = ref(db);
+
+        get(child(dbRef, "Shop/" + enterID.value))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              const newQuantity = snapshot.val().Quantity - enterQuant.value;
+
+              // Ensure quantity doesn't go below zero
+              const updatedQuantity = Math.max(newQuantity, 0);
+
+              update(child(dbRef, "Shop/" + enterID.value), {
+                Quantity: updatedQuantity,
+              })
+                .then(() => {
+                  console.log("Sales updated successfully!");
+                  alert("Sales updated successfully!");
+                  // Provide feedback to the user (e.g., display a success message or update UI)
+                })
+                .catch((error) => {
+                  console.error("Error updating sales:", error);
+                  alert("Failed to update sales. Please try again.");
+                });
+            } else {
+              alert("No data found for the entered ID");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+            alert("An error occurred while fetching data.");
+          });
+      }
+
+      function FindData() {
+        const dbref = ref(db);
+
+        get(child(dbref, "Shop/" + enterID.value))
+          .then((snapshot) => {
+            if (snapshot.exists()) {
+              findName.innerHTML = "Product: " + snapshot.val().Product;
+              findCost.innerHTML = "Cost: " + snapshot.val().Cost;
+              findBrand.innerHTML = "Brand: " + snapshot.val().Brand;
+              findQuant.innerHTML =
+                "Quantity available: " + snapshot.val().Quantity;
+            } else {
+              alert("No data found!");
+            }
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      }
+
+      soldBtn.addEventListener("click", () => {
+        Sold();
+        FindData();
+      });
+    </script>
+  </body>
+</html>

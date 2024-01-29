@@ -1,0 +1,68 @@
+body {
+    text-align: center;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #333;
+}
+
+.links {
+    margin-top: 20px;
+}
+
+a {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+
+a:hover {
+    background-color: #2980b9;
+}
+
+
+#enterdetails {
+    float: left;
+    width: 50%;
+    background-color: #2980b9;
+    color: floralwhite;
+}
+
+#finddetails {
+    float: left;
+    width: 50%;
+    background-color: floralwhite;
+    color: #2980b9
+    ;
+}
+
+input {
+    width: 120pxs;
+}
+
+.data {
+    margin-bottom: 15px;
+    margin-top: 50px;
+}
