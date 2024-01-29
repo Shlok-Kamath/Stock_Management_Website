@@ -26,8 +26,8 @@
     </div>
 
     <div id="finddetails">
-      <h1>Details of recently sold product</h1>
-
+      <h1>Details of recently sold product</h1><br /><br />
+      <button id="find">Recent</button>
       <h3 id="findName" type="text"></h3>
       <h3 id="findCost" type="number"></h3>
       <h3 id="findBrand" type="text"></h3>
@@ -71,6 +71,7 @@
       var enterQuant = document.querySelector("#enterQuant");
 
       var soldBtn = document.querySelector("#sold");
+      var recentBtn = document.querySelector("#find");
       var findName = document.querySelector("#findName");
       var findPrice = document.querySelector("#findPrice");
       var findBrand = document.querySelector("#findBrand");
@@ -131,8 +132,14 @@
 
       soldBtn.addEventListener("click", () => {
         Sold();
+      });
+
+      recentBtn.addEventListener("click", () => {
         FindData();
       });
+
+      
+
     </script>
   </body>
 </html>
